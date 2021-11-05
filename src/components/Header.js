@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
+import React, { useState } from 'react';
+import styled from 'styled-components';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
+import { selectCars } from '../features/Car/carSlice';
+import { useSelector } from 'react-redux';
 
 function Header() {
     const [BurgerStatus, setBurgerStatus] = useState(false);
-
+    const cars = useSelector(selectCars);
     return (
         <Container>
             <Logo>
@@ -14,10 +16,13 @@ function Header() {
                 </a>
             </Logo>
             <Models>
-                <a href="#">Model 3</a>
+                {cars && cars.map((car, index) => (
+                    <a key={index} href="#">{car}</a>
+                ))}
+                {/* <a href="#">Model 3</a>
                 <a href="#">Model Y</a>
                 <a href="#">Model S</a>
-                <a href="#">Model X</a>
+                <a href="#">Model X</a> */}
             </Models>
             <Logins>
                 <a href="#">Shop</a>
@@ -29,10 +34,15 @@ function Header() {
                     <CustomClose onClick={()=> setBurgerStatus(false)} />
                 </CloseWrapper>
                 <MobileBurger>
-                    <li><a href="#">Model 3</a></li>
+                    {
+                        cars && cars.map((car,index) => (
+                            <li><a key={index} href="#">{car}</a></li>
+                        ))
+                    }
+                    {/* <li><a href="#">Model 3</a></li>
                     <li><a href="#">Model Y</a></li>
                     <li><a href="#">Model S</a></li>
-                    <li><a href="#">Model X</a></li>
+                    <li><a href="#">Model X</a></li> */}
                 </MobileBurger>
                 <li><a href="#">Existing Inventory</a></li>
                 <li><a href="#">Used Inventory</a></li>
